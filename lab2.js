@@ -43,55 +43,42 @@ function assert(expression, failureMessage) {
     third hour      |    3/hour        |        3         |
     fourth hour     |    4/hour        |        4         |
 
- TODO: First, make a constructor function, called Blob, that makes blobs.*/
- function Blob (personsConsumed, rateOfConsumption) {
-  this.personsConsumed = personsConsumed;
-  this.rateOfConsumption = rateOfConsumption;
-  this.totalTime = 0;
- }
+ TODO: First, make a constructor function, called Blob, that makes blobs.
+ TODO: Next, create an instance of Blob named blob.
+ TODO: Then, use a loop to calculate how long it took the blob to finish
+ with Dowington.
+*/
+ var dowington = 1000;
 
- //TODO: Next, create an instance of Blob named blob.//
- var blob = new Blob();
+ function Blob () {
+  this.personsConsumed = 0;
+  }
+
+  var blob = new Blob();
+  for (var i = 0; i < dowington; i++) {
+    blob.personsConsumed += i;
+    if (blob.peopleConsumed > dowington) {
+      var time = i;
+      break;
+    }
+  }
+
+  var hoursSpentInDowington = time;
 
  //TODO: Then, use a loop to calculate how long it took the blob to finish
  //with Dowington.
- var dowington = 1000;
-
- function rateOfBlob(hours) {
-  var peopleEaten = hours + 1;
-  return peopleEaten;
- }
-
- var blob = new Blob(0,1);
-
- for (var rateOfConsumption = 1; rateOfConsumption <= 1001; rateOfConsumption++) {
-  this.totalTime += (60 / rateOfConsumption);
- }
-
- blob.conversion = function() {
-  var result = (this.totalTime / 60);
-  var hours = Math.floor(result);
-  return (hours);
- };
-
-
-var hoursSpentInDowington; // TODO: assign me the value of the
-                           // above calculation (how long it took
-                           // the blob to eat Dowington)
-blob.conversion();
-console.log(hoursSpentInDowington);
-
-// Now, write a method that takes a population for an arbitrary
-// town, and the starting consumption rate, and returns the number
-// of hours the blob needs to ooze its way through that town.
-
-Blob.prototype.hoursToOoze = function(population, peoplePerHour) {
-  for (peoplePerHour; peoplePerHour <= population; peoplePerHour++) {
-    this.totalTime += (60 / peoplePerHour);
+Blob.prototype.hoursToOoze = function hoursToOoze(population, peoplePerHour) {
+  var localPeopleEaten = 0;
+  var i = 0;
+  while (localPeopleEaten < population) {
+    localPeopleEaten += peoplePerHour + i;
+    i++;
   }
+
+  return i;
+};
   // TODO: implement me based on the instructions above.
   // Be sure to then assign me to the Blob's prototype.
-};
 
 assert(blob.hoursToOoze(0, 1) === 0, 'no people means no time needed.');
 assert(blob.hoursToOoze(1000, 1) === hoursSpentInDowington,
@@ -127,51 +114,61 @@ function SentientBeing (homePlanet, language) {
 }
 
 // sb is a SentientBeing object
-function sayHello (sb) {
+SentientBeing.prototype.sayHello = function sayHello (sb) {
     // TODO: say hello prints out (console.log's) hello in the
     // language of the speaker, but returns it in the language
     // of the listener (the sb parameter above).
     // use the 'hello' object at the beginning of this exercise
     // to do the translating
+   if (sb.language == 'romulan') {
     console.log(hello[this.language]);
-    return hello[sb.language];
+    return (hello.romulan);
+
   }
-  //TODO: put this on the SentientBeing prototype
-SentientBeing.prototype = {};
-SentientBeing.prototype.sayHello = sayHello;
 
-function Klingon() {
-  this.parent = 'SentientBeing';
-}
-function Romulan() {
-  this.parent = 'SentientBeing';
-}
-function Human() {
-  this.parent = 'SentientBeing';
-}
+  if (sb.language == 'klingon') {
+    console.log(hello[this.language]);
+    return (hello.klingon);
+  }
 
+  if (sb.language == 'federation standard') {
+    console.log(hello[this.language]);
+    return (hello['federation standard']);
+  }
+};
+//TODO: put this on the SentientBeing prototype
 
 // TODO: create three SentientBeings, one for each language in the
 // 'hello' object above.
-var Klingon = new SentientBeing('Qo\'noS', 'nuqneH'); // TODO: make a klingon
-var Romulan = new SentientBeing('Romulus', 'Jolan\'tru'); // TODO: make a romulan
-var Human = new SentientBeing('Earth', 'hello'); // TODO: make a human
+function Human() {}
+
+function Klingon() {}
+
+function Romulan() {}
+
+var klingon = new SentientBeing("Qo\"Nos", "klingon");
+var romulan = new SentientBeing("Romulus", "romulan");
+var human = new SentientBeing("Earth", "federation standard");
 
 assert(Human.sayHello(Klingon) === 'nuqneH',
   'the klingon should hear nuqneH');
 
 // TODO: write five more assertions, to complete all the possible
 // greetings between the three types of sentient beings you created above.
-assert(Human.sayHello(Romulan) === 'Jolan\'tru',
+assert((new Human()).sayHello(new Romulan()) === 'Jolan\'tru',
   'the romulan should hear Jolan\'tru');
-assert(Romulan.sayHello(Klingon) === 'nuqneH',
+
+assert((new Klingon()).sayHello(new Human()) === 'hello',
+  'the human should hear hello');
+
+assert((new Klingon()).sayHello(new Romulan()) === 'Jolan\'tru',
+  'the romulan should hear Jolan\'tru');
+
+assert((new Romulan()).sayHello(new Klingon()) === 'nuqneH',
   'the klingon should hear nuqneH');
-assert(Romulan.sayHello(Human) === 'hello',
-  'the human should hear hello');
-assert(Klingon.sayHello(Romulan) === 'Jolan\'tru',
-  'the romulan should hear Jolan\'tru');
-assert(Klingon.sayHello(Human) === 'hello',
-  'the human should hear hello');
+
+assert((new Romulan()).sayHello(new Human()) === 'hello',
+  'the klingon should hear nuqneH');
 
 //*********************************************************
 // PROBLEM 3: Moar Loops. 20 points.
@@ -181,14 +178,23 @@ assert(Klingon.sayHello(Human) === 'hello',
 //*********************************************************
 function max(array) {
   // TODO: return the largest number in the given array
-  return Math.max.apply(Math, array);
+  var largestNumber = 0;
+  for (i = 0; i < array.length; i++) {
+    if (array[i] > largestNumber) {
+      largestNumber = array[i];
+    }
+  }
+  return largestNumber;
 }
+
 
 // TODO: write three more assertions
 assert(max([ 1, 3, 2 ]) === 3, '[1,3,2]');
 assert(max([ 1, 3, 15 ]) === 15, '[1,3,15]');
 assert(max([ 60, 3, 2 ]) === 60, '[60,3,2]');
 assert(max([ 1, 18, 2 ]) === 18, '[1,18,2]');
+
+function variablify(string) {
 
 // TODO: you are given a string with several words in it
   // return a corresponding variable name that follows
@@ -198,21 +204,16 @@ assert(max([ 1, 18, 2 ]) === 18, '[1,18,2]');
   //  split(), charAt(), toUpperCase()
   // and this array method: join()
 
-function variablify(string) {
-  var splitString = string.split(' ');
-  var value = [];
-  var i = 0;
-
-  for (i = 0, i < splitString; i++) {
-    if (i! === 0) {
-      value.push(splitString[i].charAt(0).toUpperCase()splitString[i].slice(1));
-    }
-    else {
-      value.push(splitString[i]);
+var arrayedString = string.split(" ");
+  var camelCasify = arrayedString[0].toLowerCase();
+  for (var i = 1; i < arrayedString.length; i++) {
+    var nextWord = arrayedString[i];
+    camelCasify += nextWord.charAt(0).toUpperCase();
+    for (var j = 1; j < nextWord.length; j++) {
+      camelCasify += nextWord.charAt(j).toLowerCase();
     }
   }
-  var joinedWords = value.join('');
-  return joinedWords;
+  return camelCasify;
 }
 
 // TODO: write three more assertions
